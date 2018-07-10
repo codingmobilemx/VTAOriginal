@@ -1,6 +1,5 @@
 package com.vta.codingmobile.vtamovil;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.vta.codingmobile.vtamovil.Adapters.ProductsAdapter;
+import com.vta.codingmobile.vtamovil.Adapters.NewProductsAdapter;
 import com.vta.codingmobile.vtamovil.Fragments.NewProductsFragment;
 
 import java.util.ArrayList;
@@ -56,8 +55,14 @@ public class MainActivity extends AppCompatActivity
         fragments.add(new NewProductsFragment());
 
         ViewPager viewPagerNewProducts = findViewById(R.id.viewPagerNewProducts);
-        ProductsAdapter productsAdapter = new ProductsAdapter(this.getSupportFragmentManager(), fragments);
+        NewProductsAdapter productsAdapter = new NewProductsAdapter(this.getSupportFragmentManager(), fragments);
         viewPagerNewProducts.setAdapter(productsAdapter);
+
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext());
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new ListaSolicitudesAdapter(listaSolicitudesEntity);
     }
 
     @Override
