@@ -1,6 +1,9 @@
 package com.vta.codingmobile.vtamovil.Adapters;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,16 +18,34 @@ public class ProductsAdapter  extends RecyclerView.Adapter<ProductsAdapter.Produ
 
     }
 
-    class ProductViewHolder extends RecyclerView.ViewHolder {
+    @NonNull
+    @Override
+    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
+    }
 
-        private TextView tvNombreClienteSd;
+    @Override
+    public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
+    class ProductViewHolder extends RecyclerView.ViewHolder {
+       public ProductViewHolder(View itemView) {
+           super(itemView);
+       }
+/*  private TextView tvNombreClienteSd;
         private TextView tvDireccionClienteSd;
         private ImageView ivSemaforo;
         private TextView tvTipoSolicitud;
         private ImageView ivPorcentaje;
         private ImageButton ibDetalleSolicitud;
 
-        ProductsAdapter(final View itemView) {
+       ProductViewHolder(final View itemView) {
             super(itemView);
 
             tvNombreClienteSd =     itemView.findViewById(R.id.tvNombreClienteSd);
@@ -41,6 +62,6 @@ public class ProductsAdapter  extends RecyclerView.Adapter<ProductsAdapter.Produ
                 }
 
             });
-        }
+        }*/
     }
 }
