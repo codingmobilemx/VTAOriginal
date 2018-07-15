@@ -27,7 +27,7 @@ public final class ApiServices {
         client.setTimeout(Constants.TIMEOUT);
         client.setMaxRetriesAndTimeout(1, 100);
         client.setMaxConnections(20);
-        client.setLoggingEnabled(Boolean.FALSE);
+      //  client.setLoggingEnabled(Boolean.FALSE);
         return client;
     }
 }

@@ -8,13 +8,20 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPagerNewProducts"
+    <!-- <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView android:id="@+id/rvProducts"
+       <android.support.v4.view.ViewPager
+            android:id="@+id/viewPagerNewProducts"
+            android:layout_width="match_parent"
+            android:layout_height="240dp" />
+
+
+   </LinearLayout>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleViewProducts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>
