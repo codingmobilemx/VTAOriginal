@@ -13,9 +13,23 @@
         android:scaleType="centerCrop"
         android:src="@drawable/notimage" />
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginTop="-30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="6dp"
+        android:background="@color/primary_text"
+        android:alpha=".9">
+        <TextView
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTitle" />
+    </LinearLayout>
 
 </LinearLayout>

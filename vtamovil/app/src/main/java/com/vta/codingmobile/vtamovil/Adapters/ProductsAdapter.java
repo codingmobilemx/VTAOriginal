@@ -40,6 +40,8 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
         DownloadImage downloadImage = new DownloadImage(holder.imvProduct);
         downloadImage.execute(product.getImages().getUrl());
 
+        holder.tvTitle.setText(product.getTitle());
+
     }
 
     @Override

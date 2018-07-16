@@ -51,6 +51,7 @@ public class ProgressBarFragment extends DialogFragment {
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         getDialog().setCanceledOnTouchOutside(false);
     }
+
     public void show() {
         Dialog dialog = this.getDialog();
         if (dialog != null) {

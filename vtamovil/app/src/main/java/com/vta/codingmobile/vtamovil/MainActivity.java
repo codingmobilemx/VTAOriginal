@@ -1,6 +1,8 @@
 package com.vta.codingmobile.vtamovil;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.design.widget.FloatingActionButton;
@@ -30,6 +32,7 @@ import com.vta.codingmobile.vtamovil.Fragments.NewProductsFragment;
 import com.vta.codingmobile.vtamovil.Fragments.ProgressBarFragment;
 import com.vta.codingmobile.vtamovil.Helpers.Constants;
 import com.vta.codingmobile.vtamovil.Helpers.Enumerators.TypeImage;
+import com.vta.codingmobile.vtamovil.Helpers.Images.BitmapHelper;
 import com.vta.codingmobile.vtamovil.Model.Clases.Product;
 import com.vta.codingmobile.vtamovil.Services.ApiServices;
 import com.vta.codingmobile.vtamovil.Services.DataService;
@@ -69,8 +72,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                BitmapHelper.takePicture();
+                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
@@ -198,5 +201,17 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constants.GALLERY) {
+                BitmapHelper.onSelectFromGalleryResult(data);
+            } else if (requestCode == Constants.CAMERA) {
+                BitmapHelper.onCaptureFromCameraResult(data);
+            }
+        }
     }
 }

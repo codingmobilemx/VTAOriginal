@@ -10,4 +10,8 @@ public final class Constants {
 
     public static final String URI_BASE = "http://portalsyltu.azurewebsites.net/api/";
     public static final String GETALL_PRODUCTS = "Products/GetAll?count=%s&typeImage=%s";
+
+    public static final int CAMERA = 1;
+    public static final int GALLERY = 2;
+    public static final int CROP_IMAGE_CAMERA = 3;
 }
