@@ -1,5 +1,6 @@
 package com.vta.codingmobile.vtamovil.Helpers.Images;
 
+import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.vta.codingmobile.vtamovil.BuildConfig;
 import com.vta.codingmobile.vtamovil.Helpers.Constants;
+import com.vta.codingmobile.vtamovil.Helpers.Permissions.PermissionCamera;
 import com.vta.codingmobile.vtamovil.MainActivity;
 import com.vta.codingmobile.vtamovil.Model.Clases.ImageSize;
 import com.vta.codingmobile.vtamovil.R;
@@ -37,6 +39,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
@@ -72,22 +75,29 @@ public class BitmapHelper {
                 "Por favor seleccione una imagen..."), Constants.GALLERY);
     }
 
+    static File photoFile = null;
+
     public static void takePicture() {
         try {
-            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (takePictureIntent.resolveActivity(MainActivity.context.getPackageManager()) != null) {
-                File photoFile = null;
-                try {
-                    photoFile = createImageFile();
-                } catch (IOException ex) {
-                    Log.e(TAG, "Error", ex);
-                }
+            if (PermissionCamera.checkPermissionCamera()) {
 
-                if (photoFile != null) {
-                    Uri photoURI = FileProvider.getUriForFile(MainActivity.context, BuildConfig.APPLICATION_ID, photoFile);
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(MainActivity.context.getPackageManager()) != null) {
 
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                    MainActivity.mainActivity.startActivityForResult(takePictureIntent, Constants.CAMERA);
+                    try {
+                        //photoFile = createImageFile();
+                        photoFile = createDirectoryForPictures();
+
+                    } catch (Exception ex) {
+                        Log.e(TAG, "Error", ex);
+                    }
+
+                    if (photoFile != null) {
+                        photoURI = FileProvider.getUriForFile(MainActivity.context, BuildConfig.APPLICATION_ID, photoFile);
+
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                        MainActivity.mainActivity.startActivityForResult(takePictureIntent, Constants.CAMERA);
+                    }
                 }
             }
         } catch (Exception ex) {
@@ -95,10 +105,51 @@ public class BitmapHelper {
         }
     }
 
+    static Uri photoURI;
+
+    private static void cropImageX() {
+        final int width = 400;
+        final int height = 200;
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            Uri contentUri;
+
+            contentUri = FileProvider.getUriForFile(MainActivity.context, BuildConfig.APPLICATION_ID, photoFile);
+
+            //TODO:  Permission..
+
+            MainActivity.mainActivity.getApplicationContext().grantUriPermission("com.android.camera",
+                    contentUri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            cropIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+
+            cropIntent.setDataAndType(contentUri, "image/*");
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("aspectX", 2);
+            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("outputX", width);
+            cropIntent.putExtra("outputY", height);
+
+            cropIntent.putExtra("return-data", true);
+            MainActivity.mainActivity.startActivityForResult(cropIntent, Constants.CROP_IMAGE_CAMERA);
+
+        } catch (ActivityNotFoundException a) {
+            Log.e("Activity Not Found", "" + a.toString());
+        }
+    }
+
     private static void cropImage() {
         try {
+            MainActivity.mainActivity.grantUriPermission("com.android.camera", photoURI,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
             Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setDataAndType(Uri.parse(imageFilePath), "image/*");
+            intent.setDataAndType(photoURI, "image/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
             intent.putExtra("crop", true);
             intent.putExtra("outputX", 512);
@@ -112,6 +163,33 @@ public class BitmapHelper {
             Log.i(TAG, "Error", ex);
         }
     }
+
+    public static void TakePicture() {
+        createDirectoryForPictures();
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, _uri);
+        MainActivity.mainActivity.startActivityForResult(intent, Constants.CAMERA);
+    }
+
+    private static File createDirectoryForPictures() {
+        _file = new File(MainActivity.context.getExternalCacheDir(), UUID.randomUUID().toString() + ".jpg");
+        //  _uri = Uri.fromFile(_file);
+        return _file;
+    }
+
+    public static File _file;
+    static Uri _uri;
+
+    private static void CreateDirectoryForPictures() {
+        try {
+            _file = createImageFile();
+            _uri = Uri.fromFile(_file);
+        } catch (Exception ex) {
+
+        }
+    }
+
 
     public static void onCaptureFromCameraResult(Intent data) {
         Bitmap bitmap = null;

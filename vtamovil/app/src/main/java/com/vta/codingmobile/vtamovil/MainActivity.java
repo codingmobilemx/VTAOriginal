@@ -1,8 +1,13 @@
 package com.vta.codingmobile.vtamovil;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +26,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -212,6 +218,26 @@ public class MainActivity extends AppCompatActivity
             } else if (requestCode == Constants.CAMERA) {
                 BitmapHelper.onCaptureFromCameraResult(data);
             }
+        }
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode) {
+            case Constants.P_READ_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    BitmapHelper.takePicture();
+                } else {
+
+                    //code for deny
+                    //Toast.makeText(context, R.string.CamaraDenny, Toast.LENGTH_SHORT).show();
+
+                }
+                break;
+            case Constants.P_FINE_LOCATION:
+
+                break;
         }
     }
 }

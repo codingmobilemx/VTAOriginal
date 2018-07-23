@@ -14,4 +14,6 @@ public final class Constants {
     public static final int CAMERA = 1;
     public static final int GALLERY = 2;
     public static final int CROP_IMAGE_CAMERA = 3;
+    public static final int P_READ_EXTERNAL_STORAGE = 4;
+    public static final int P_FINE_LOCATION = 5;
 }
