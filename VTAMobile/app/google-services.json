@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "191773876630",
+    "firebase_url": "https://vta-original.firebaseio.com",
+    "project_id": "vta-original",
+    "storage_bucket": "vta-original.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191773876630:android:36e793c2b61cfd2d",
+        "android_client_info": {
+          "package_name": "com.vtao.codingmobile.vtamobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191773876630-ac987vgbjo3ahams2jv1p2trk8odh2pf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVswaIJMwpynur5HPn8YcpcZLZuya3w0g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
